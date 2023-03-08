@@ -17,11 +17,11 @@ import javax.inject.Singleton
 object AppModule {
     @Singleton
     @Provides
-    fun provideQuoteAPI(): QuoteAPI = Retrofit.Builder().baseUrl(ACCESS_URL).addConverterFactory(GsonConverterFactory.create()).build().create(QuoteAPI::class.java)
-
+    fun provideQuoteAPI(): QuoteAPI =
+        Retrofit.Builder().baseUrl(ACCESS_URL).addConverterFactory(GsonConverterFactory.create())
+            .build().create(QuoteAPI::class.java)
 
     @Singleton
     @Provides
     fun provideRepository(api: QuoteAPI): Repository = ImplementedRepository(api)
-
 }

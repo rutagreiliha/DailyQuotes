@@ -4,37 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".homeScreens.HomeFragment"
     android:backgroundTint="#fcfcfa"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".homeScreens.HomeFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/quote"
-        android:autoSizeTextType="uniform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="center"
+        android:layout_weight="1"
+        android:autoSizeTextType="uniform"
         android:paddingStart="25dp"
         android:paddingTop="80dp"
         android:paddingEnd="25dp"
         android:textAlignment="center"
-        app:fontFamily="@font/kalam_light"/>
-
+        app:fontFamily="@font/kalam_light" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:useCompatPadding="true"
+        android:layout_gravity="end"
+        android:layout_marginTop="50dp"
         android:layout_weight="0"
         android:backgroundTint="#e8e4c5"
         android:contentDescription="Refresh"
-        android:paddingBottom="50dp"
-        android:paddingEnd="50dp"
         android:paddingStart="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="end"
-        android:src="@drawable/refresh"/>
+        android:paddingEnd="50dp"
+        android:paddingBottom="50dp"
+        android:src="@drawable/refresh"
+        app:useCompatPadding="true" />
 </androidx.appcompat.widget.LinearLayoutCompat>
