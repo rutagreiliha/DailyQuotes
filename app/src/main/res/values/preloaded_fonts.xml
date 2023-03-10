@@ -2,5 +2,6 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/kalam_light</item>
+        <item>@font/signika_negative</item>
     </array>
 </resources>
