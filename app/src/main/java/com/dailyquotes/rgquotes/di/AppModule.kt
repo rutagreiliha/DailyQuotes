@@ -1,12 +1,17 @@
 package com.dailyquotes.rgquotes.di
 
+import android.content.Context
+import androidx.room.Room
 import com.dailyquotes.rgquotes.data.APIaccess.Companion.ACCESS_URL
 import com.dailyquotes.rgquotes.data.ImplementedRepository
 import com.dailyquotes.rgquotes.data.QuoteAPI
 import com.dailyquotes.rgquotes.data.Repository
+import com.dailyquotes.rgquotes.data.room.Database
+import com.dailyquotes.rgquotes.data.room.QuoteDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,5 +28,20 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRepository(api: QuoteAPI): Repository = ImplementedRepository(api)
+    fun provideDatabase(
+        @ApplicationContext app: Context
+    ) = Room.databaseBuilder(
+        app,
+        Database::class.java,
+        "quote_table"
+    ).build()
+
+    @Singleton
+    @Provides
+    fun provideQuoteDao(database:Database): QuoteDao = database.QuoteDao()
+
+    @Singleton
+    @Provides
+    fun provideRepository(api: QuoteAPI, room:QuoteDao): Repository = ImplementedRepository(api,room)
+
 }
