@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 // Fragment that contains the quote of the day and refresh option
 @AndroidEntryPoint
@@ -25,25 +24,18 @@ class HomeFragment : Fragment() {
     private val viewModel: DataViewModel by activityViewModels()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding
+    private var quoteidtext: String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding?.apply {
-            // Request API call to show quote when app opens
-            viewLifecycleOwner.lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    viewModel.getQuote()
-                }
-            }
+            // Gets a quote to display
+            viewModel.getQuote(quoteidtext)
             // On refresh get new quote
             refresh.setOnClickListener {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        viewModel.getQuote()
-                    }
-                }
+                viewModel.refreshQuote(quoteidtext)
             }
             // Listen to responses
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
@@ -55,7 +47,8 @@ class HomeFragment : Fragment() {
                             }
                             is Status.Success<*> -> {
                                 if (it.data != null) {
-                                    val fullquote = it.data[0].quote + " - " + it.data[0].author
+                                    quoteidtext = it.data.quote
+                                    val fullquote = it.data.quote + " - " + it.data.author
                                     quote.text = fullquote
                                 }
                                 viewModel.clearUpdate()
@@ -78,12 +71,10 @@ class HomeFragment : Fragment() {
         }
         return binding?.root
     }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
