@@ -1,4 +1,4 @@
-package com.dailyquotes.rgquotes.di
+package com.dailyquotes.rgquotes.homeScreens.di
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

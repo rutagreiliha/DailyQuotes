@@ -1,4 +1,4 @@
-package com.dailyquotes.rgquotes.di
+package com.dailyquotes.rgquotes.homeScreens.di
 
 import android.content.Context
 import androidx.room.Room
